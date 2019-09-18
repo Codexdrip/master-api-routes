@@ -95,8 +95,12 @@ router.delete("/deleteplayer", async (req, res) => {
     { teamName: _newTeam },
     { $pull: { players: _newPlayer } }
   );
-
-  console.log("Did a name get deleted: ", outcome);
+  if (outcome.nModified) {
+    let data = await TeamModel.find();
+    res.json(data);
+  } else {
+    res.json({ msg: "Nothing was modified. [msg: Express]" });
+  }
 });
 
 module.exports = router;
