@@ -1,20 +1,28 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const DB = require("./db/dbConnector");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const app = express();
+const mongoDB = `mongodb://${DB.dbUser}:${DB.dbPass}@ds019916.mlab.com:19916/cfbc`;
 
-var app = express();
+mongoose
+  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("connection succesful"))
+  .catch(err => console.error(err));
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
 
 module.exports = app;
