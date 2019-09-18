@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const cfbcRouter = require("./routes/cfbc/cfbc");
+
 const DB = require("./db/dbConnector");
 
 const app = express();
@@ -16,6 +18,12 @@ mongoose
   .then(() => console.log("connection succesful"))
   .catch(err => console.error(err));
 
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
+app.use(bodyParser.json());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -24,5 +32,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/cfbc", cfbcRouter);
 
 module.exports = app;
