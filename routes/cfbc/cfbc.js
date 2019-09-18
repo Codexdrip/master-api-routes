@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const cors = require("cors");
 const TeamModel = require("../../models/models");
 
-router.get("/", async (req, res, next) => {
+router.get("/", cors(), async (req, res, next) => {
   let data = await TeamModel.find();
   res.json(data);
 });
 
-router.post("/addteam", async (req, res) => {
+router.post("/addteam", cors(), async (req, res) => {
   let _newTeam = req.body.teamName.toLowerCase();
 
   /// Check to see if post data is undefined or empty
@@ -49,7 +50,7 @@ router.post("/addteam", async (req, res) => {
   }
 });
 
-router.post("/addplayer", async (req, res) => {
+router.post("/addplayer", cors(), async (req, res) => {
   let _newTeam = req.body.teamName.toLowerCase();
   let _newPlayer = req.body.player.toLowerCase();
   let data = await TeamModel.find();
@@ -71,7 +72,7 @@ router.post("/addplayer", async (req, res) => {
   }
 });
 
-router.delete("/deleteteam", async (req, res) => {
+router.delete("/deleteteam", cors(), async (req, res) => {
   let _newTeam = req.body.teamName.toLowerCase();
   let outcome = await TeamModel.deleteOne({ teamName: _newTeam });
 
@@ -87,7 +88,7 @@ router.delete("/deleteteam", async (req, res) => {
   }
 });
 
-router.delete("/deleteplayer", async (req, res) => {
+router.delete("/deleteplayer", cors(), async (req, res) => {
   let _newTeam = req.body.teamName.toLowerCase();
   let _newPlayer = req.body.player.toLowerCase();
 

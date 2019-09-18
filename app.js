@@ -3,6 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -17,6 +18,7 @@ mongoose
   .then(() => console.log("connection succesful"))
   .catch(err => console.error(err));
 
+app.use(cors());
 app.use(
   bodyParser.urlencoded({
     extended: false
