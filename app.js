@@ -7,12 +7,10 @@ const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const cfbcRouter = require("./routes/cfbc/cfbc");
-
-const DB = require("./db/dbConnector");
+//const DB = require("./db/dbConnector");
 
 const app = express();
-const mongoDB = `mongodb://${DB.dbUser || process.env.DBUSER}:${DB.dbPass ||
-  process.env.DBPASS}@ds019916.mlab.com:19916/cfbc`;
+const mongoDB = `mongodb://${process.env.DBUSER}:${process.env.DBPASS}@ds019916.mlab.com:19916/cfbc`;
 
 mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
