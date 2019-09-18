@@ -8,7 +8,7 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/addteam", async (req, res) => {
-  let _newTeam = req.body.teamName;
+  let _newTeam = req.body.teamName.toLowerCase();
 
   /// Check to see if post data is undefined or empty
   if (_newTeam) {
@@ -17,7 +17,7 @@ router.post("/addteam", async (req, res) => {
     /// Check to see if the team name exist in the db...
     /// teamNameCheck gets an array, if its len>0 then a match was found.
     let teamNameCheck = data.filter(
-      team => team.teamName.toLowerCase() === _newTeam.toLowerCase()
+      team => team.teamName.toLowerCase() === _newTeam
     );
     if (teamNameCheck && teamNameCheck.length) {
       // array and array.length are truthy then...
@@ -50,8 +50,8 @@ router.post("/addteam", async (req, res) => {
 });
 
 router.post("/addplayer", async (req, res) => {
-  let _newTeam = req.body.teamName;
-  let _newPlayer = req.body.player;
+  let _newTeam = req.body.teamName.toLowerCase();
+  let _newPlayer = req.body.player.toLowerCase();
   let data = await TeamModel.find();
 
   if (_newPlayer) {
@@ -69,6 +69,34 @@ router.post("/addplayer", async (req, res) => {
       res.json({ msg: "There was a problem adding the player [msg: Express]" });
     }
   }
+});
+
+router.delete("/deleteteam", async (req, res) => {
+  let _newTeam = req.body.teamName.toLowerCase();
+  let outcome = await TeamModel.deleteOne({ teamName: _newTeam });
+
+  /// if outcome.n is 1, then a document was successfully deleted
+  if (outcome.n) {
+    let data = await TeamModel.find();
+    res.json(data);
+  } else {
+    console.log(outcome.n);
+    res.json({
+      msg: "There was a problem, Nothing was deleted. [msg: Express]"
+    });
+  }
+});
+
+router.delete("/deleteplayer", async (req, res) => {
+  let _newTeam = req.body.teamName.toLowerCase();
+  let _newPlayer = req.body.player.toLowerCase();
+
+  let outcome = await TeamModel.updateOne(
+    { teamName: _newTeam },
+    { $pull: { players: _newPlayer } }
+  );
+
+  console.log("Did a name get deleted: ", outcome);
 });
 
 module.exports = router;

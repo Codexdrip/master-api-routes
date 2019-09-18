@@ -11,7 +11,8 @@ const cfbcRouter = require("./routes/cfbc/cfbc");
 const DB = require("./db/dbConnector");
 
 const app = express();
-const mongoDB = `mongodb://${DB.dbUser}:${DB.dbPass}@ds019916.mlab.com:19916/cfbc`;
+const mongoDB = `mongodb://${DB.dbUser || process.env.DBUSER}:${DB.dbPass ||
+  process.env.DBPASS}@ds019916.mlab.com:19916/cfbc`;
 
 mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
