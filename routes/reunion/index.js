@@ -11,8 +11,14 @@ router.post('/send', cors(), (req, res) => {
   try {
     const mailOptions = {
       from: req.body.email, // sender address
-      to: process.env.email, // list of receivers
+      to: [process.env.email, req.body.email], // list of receivers
       subject: req.body.subject, // Subject line
+      attachments: [
+        {   // file on disk as an attachment
+          filename: 'Fam.zip',
+          path: './Fam.zip' // stream this file
+        }
+      ],
       html: `
       <p>You have a new contact request.</p>
       <h3>Contact Details</h3>
