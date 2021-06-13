@@ -30,7 +30,7 @@ router.post('/send', cors(), (req, res) => {
         res.status(500).send({
           success: false,
           message: '[1]Something went wrong. Try again later ' + err,
-          check: process.env.email + " " + process.env.password
+          //check: process.env.email + " " + process.env.password
         });
       } else {
         res.send({
