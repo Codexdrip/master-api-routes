@@ -29,7 +29,7 @@ router.post('/send', cors(), (req, res) => {
       if (err) {
         res.status(500).send({
           success: false,
-          message: 'Something went wrong. Try again later'
+          message: '[1]Something went wrong. Try again later ' + mailOptions.subject
         });
       } else {
         res.send({
@@ -41,7 +41,7 @@ router.post('/send', cors(), (req, res) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: 'Something went wrong. Try again later'
+      message: '[2]Something went wrong. Try again later ' + mailOptions.subject
     });
   }
 });
