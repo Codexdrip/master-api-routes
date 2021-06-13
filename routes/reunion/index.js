@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 const cors = require("cors");
 const transporter = require('./config');
-const dotenv = require('dotenv');
-dotenv.config();
+//const dotenv = require('dotenv');
+//dotenv.config();
 
 
 router.post('/send', cors(), (req, res) => {
