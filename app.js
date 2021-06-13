@@ -8,15 +8,16 @@ const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const cfbcRouter = require("./routes/cfbc/cfbc");
+const reRouter = require("./routes/reunion/index")
 //const DB = require("./db/dbConnector");
 
 const app = express();
-const mongoDB = `mongodb://${process.env.DBUSER}:${process.env.DBPASS}@ds019916.mlab.com:19916/cfbc`;
+//const mongoDB = `mongodb://${process.env.DBUSER}:${process.env.DBPASS}@ds019916.mlab.com:19916/cfbc`;
 
-mongoose
-  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("connection succesful"))
-  .catch(err => console.error(err));
+//mongoose
+//  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+//  .then(() => console.log("connection succesful"))
+//  .catch(err => console.error(err));
 
 app.use(cors());
 app.use(
@@ -34,5 +35,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/cfbc", cfbcRouter);
+app.use("/reunion", reRouter)
 
 module.exports = app;
